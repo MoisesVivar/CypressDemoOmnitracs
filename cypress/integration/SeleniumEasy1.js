@@ -1,20 +1,19 @@
 /// <reference types="Cypress" />
 
 describe("Basics", function(){
-
+    
     before(function(){
         cy.fixture('example').then(function(data){
             this.data = data
         })
+    })
+
+    beforeEach(function(){
         cy.visit("https://www.seleniumeasy.com/test/")
         cy.url().should('eq', "https://www.seleniumeasy.com/test/")
         cy.get(".at-cm-no-button").click()
         cy.get("#basic_example").click()
-    })
-    
-    beforeEach(function(){
-        cy.visit("https://www.seleniumeasy.com/test/")
-        cy.get("#basic_example").click()
+        cy.clearCookies({ log: true})
     })
     
     it("Tests simple form demo ", function(){
