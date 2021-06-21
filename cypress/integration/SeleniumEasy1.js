@@ -1,18 +1,23 @@
 /// <reference types="Cypress" />
 
 describe("Basics", function(){
-    beforeEach(function(){
+
+    before(function(){
         cy.fixture('example').then(function(data){
             this.data = data
         })
-        cy.clearCookies({ log: true})
         cy.visit("https://www.seleniumeasy.com/test/")
         cy.url().should('eq', "https://www.seleniumeasy.com/test/")
         cy.get(".at-cm-no-button").click()
         cy.get("#basic_example").click()
     })
     
-    it("Test simple form demo ", function(){
+    beforeEach(function(){
+        cy.visit("https://www.seleniumeasy.com/test/")
+        cy.get("#basic_example").click()
+    })
+    
+    it("Tests simple form demo ", function(){
         cy.get(".list-group > [href='./basic-first-form-demo.html']").click()
         //Verifiying the message
         this.data.SimpleFormDemo.forEach(function(set){
@@ -30,9 +35,25 @@ describe("Basics", function(){
             cy.get("#sum1").clear()
             cy.get("#sum2").clear()         
         })
-
     })
     
+    it("Test Check Box Demo",function(){
+        cy.get(".list-group > [href='./basic-checkbox-demo.html']").click()
+        //Checking the message
+        cy.get("#isAgeSelected").should("not.be.checked")
+        cy.get("#isAgeSelected").check().should("be.checked")
+        cy.get("#txtAge").should("have.text","Success - Check box is checked")
+        cy.get("#isAgeSelected").uncheck()
+        //Testing checkboxes 1,2,3,4
+        cy.get(".cb1-element").each((checkBox) => {
+            cy.wrap(checkBox).check()
+        })
+        cy.get("#check1").should("have.value","Uncheck All").click()
+        cy.get(".cb1-element").each((checkBox) => {
+            cy.wrap(checkBox).should("not.be.checked")
+        })
+        cy.get("#check1").should("have.value","Check All")
+    })
 
 
 })
