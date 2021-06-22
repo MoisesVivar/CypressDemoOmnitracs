@@ -1,4 +1,6 @@
 /// <reference types="Cypress" />
+import homePage from "./pageObjects/homePage"
+import {simpleForm, checkBox} from "./pageObjects/basicPages"
 
 describe("Basics", function(){
     
@@ -9,50 +11,52 @@ describe("Basics", function(){
     })
 
     beforeEach(function(){
-        cy.visit("https://www.seleniumeasy.com/test/")
-        cy.url().should('eq', "https://www.seleniumeasy.com/test/")
-        cy.get(".at-cm-no-button").click()
-        cy.get("#basic_example").click()
+        cy.visit(Cypress.env("url"))
+        cy.url().should('eq', Cypress.env("url"))
+        homePage.NoThanksButton().click()
+        homePage.BasicsButton().click()
         cy.clearCookies({ log: true})
     })
     
     it("Tests simple form demo ", function(){
-        cy.get(".list-group > [href='./basic-first-form-demo.html']").click()
-        //Verifiying the message
+        homePage.SimpleFormButton().click()
+        //Verifiying the message with 3 different sets
         this.data.SimpleFormDemo.forEach(function(set){
-            cy.get("#user-message").type(set.message)
-            cy.get("#get-input > .btn").click()
-            cy.get("#display").should("have.text",set.message)
-            cy.get("#user-message").clear()
+            simpleForm.enterMessage().type(set.message)
+            simpleForm.showMessageButton().click()
+            simpleForm.yourMessage().should("have.text",set.message)
+            simpleForm.enterMessage().clear()
         })
         //Verifiying the sum
         this.data.SimpleFormDemo.forEach(function(set){
-            cy.get("#sum1").type(set.a)
-            cy.get("#sum2").type(set.b)
-            cy.get("#gettotal > .btn").click()
-            cy.get("#displayvalue").should("have.text",set.c)
-            cy.get("#sum1").clear()
-            cy.get("#sum2").clear()         
+            simpleForm.enterA().type(set.a)
+            simpleForm.enterB().type(set.b)
+            simpleForm.getTotal().click()
+            simpleForm.total_A_plus_B().should("have.text",set.c)
+            simpleForm.enterA().clear()
+            simpleForm.enterB().clear()         
         })
     })
     
     it("Test Check Box Demo",function(){
-        cy.get(".list-group > [href='./basic-checkbox-demo.html']").click()
-        //Checking the message
-        cy.get("#isAgeSelected").should("not.be.checked")
-        cy.get("#isAgeSelected").check().should("be.checked")
-        cy.get("#txtAge").should("have.text","Success - Check box is checked")
-        cy.get("#isAgeSelected").uncheck()
+        homePage.CheckBoxButton().click()
+        //Testing single checkBox
+        checkBox.singleCheckBox().should("not.be.checked")
+        checkBox.singleCheckBox().check().should("be.checked")
+        checkBox.message().should("have.text","Success - Check box is checked")
+        checkBox.singleCheckBox().uncheck()
         //Testing checkboxes 1,2,3,4
-        cy.get(".cb1-element").each((checkBox) => {
+        checkBox.fourCheckBoxes().each((checkBox) => {
             cy.wrap(checkBox).check()
         })
-        cy.get("#check1").should("have.value","Uncheck All").click()
-        cy.get(".cb1-element").each((checkBox) => {
+        checkBox.checkUncheckButton().should("have.value","Uncheck All").click()
+        checkBox.fourCheckBoxes().each((checkBox) => {
             cy.wrap(checkBox).should("not.be.checked")
         })
-        cy.get("#check1").should("have.value","Check All")
+        checkBox.checkUncheckButton().should("have.value","Check All")
     })
+
+    
 
 
 })
