@@ -37,4 +37,28 @@ class checkBox{
     }
 }
 
-export {simpleForm, checkBox}
+class radioButton{
+    static firstTwoRadioButtons(){
+        return cy.get("input[name='optradio']")
+    }
+    static getCheckedValueButton(){
+        return cy.get("#buttoncheck")
+    }
+    static message(){
+        return cy.get(".radiobutton")
+    }
+    static sexRadioButtons(){
+        return cy.get("input[name='gender']")
+    }
+    static ageGroupRadioButtons(){
+        return cy.get("input[name='ageGroup']")
+    }
+    static getValuesButton(){
+        return cy.get(".panel-body > .btn")
+    }
+    static sexAgeGroupMessage(){
+        return cy.get(".groupradiobutton")
+    }
+}
+
+export {simpleForm, checkBox, radioButton}

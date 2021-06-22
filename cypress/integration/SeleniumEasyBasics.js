@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 import homePage from "./pageObjects/homePage"
-import {simpleForm, checkBox} from "./pageObjects/basicPages"
+import {simpleForm, checkBox, radioButton} from "./pageObjects/basicPages"
 
 describe("Basics", function(){
     
@@ -38,7 +38,7 @@ describe("Basics", function(){
         })
     })
     
-    it("Test Check Box Demo",function(){
+    it("Tests Check Box Demo",function(){
         homePage.CheckBoxButton().click()
         //Testing single checkBox
         checkBox.singleCheckBox().should("not.be.checked")
@@ -55,6 +55,28 @@ describe("Basics", function(){
         })
         checkBox.checkUncheckButton().should("have.value","Check All")
     })
+
+    it("Tests Radio buttons demo", function(){
+        homePage.RadioButtonsButton().click()
+        radioButton.firstTwoRadioButtons().each((radio) => {
+            const gender = radio.prop("value")
+            cy.wrap(radio).check()
+            radioButton.getCheckedValueButton().click()
+            radioButton.message().should("have.text","Radio button " + "'"+ gender + "'" + " is checked")
+        })
+
+        radioButton.sexRadioButtons().each((radio) =>{
+            const gender = radio.prop("value")
+            cy.wrap(radio).check()
+            radioButton.ageGroupRadioButtons().each((ageGroup) => {
+                const age =ageGroup.prop("value")
+                cy.wrap(ageGroup).check()
+                radioButton.getValuesButton().click()
+                radioButton.sexAgeGroupMessage().should("have.text","Sex : " + gender +" Age group: "+ age)
+            })
+        })
+    })
+
 
     
 
