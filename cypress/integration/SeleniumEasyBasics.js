@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 import homePage from "./pageObjects/homePage"
-import {simpleForm, checkBox, radioButton} from "./pageObjects/basicPages"
+import {simpleForm, checkBox, radioButton, javaScriptAlerts} from "./pageObjects/basicPages"
 
 describe("Basics", function(){
     
@@ -76,6 +76,15 @@ describe("Basics", function(){
             })
         })
     })
+
+    it("Tests the Javascript alerts",function(){
+        homePage.JavascriptAlertsButton().click()
+        javaScriptAlerts.handlingAlert("I am an alert box!")
+        javaScriptAlerts.handlingConfirm("Press a button!")
+        javaScriptAlerts.handlingPrompt("Moisés Vivar")
+    })
+
+
 
 
     

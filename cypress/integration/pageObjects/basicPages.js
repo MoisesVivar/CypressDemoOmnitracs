@@ -61,4 +61,26 @@ class radioButton{
     }
 }
 
-export {simpleForm, checkBox, radioButton}
+class javaScriptAlerts{
+    static handlingAlert(alertMessage){
+        cy.get(":nth-child(4) > .panel-body > .btn").click()
+        cy.on("window:alert",(str)=>{
+            expect(str).to.equal(alertMessage)
+        })
+    }
+    static handlingConfirm(confirmMessage){
+        cy.get(":nth-child(5) > .panel-body > .btn").click()
+        cy.on("window:confirm",(str)=>{
+            expect(str).to.equal(confirmMessage)
+        })
+    }
+    static handlingPrompt(promptMessage){
+        cy.window().then(($win) => {
+            cy.stub($win, 'prompt').returns(promptMessage)
+            cy.get(":nth-child(6) > .panel-body > .btn").click()
+        })
+        cy.get("#prompt-demo").should("have.text","You have entered " + "'" + promptMessage + "'" + " !")
+    }
+}
+
+export {simpleForm, checkBox, radioButton, javaScriptAlerts}
