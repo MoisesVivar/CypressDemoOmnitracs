@@ -83,4 +83,35 @@ class javaScriptAlerts{
     }
 }
 
-export {simpleForm, checkBox, radioButton, javaScriptAlerts}
+class bootstrapAlert{
+    static verifiyingNormalMessages(messageTypes){
+        cy.get("div[class=col-md-6] div").as("All_Messages")
+        cy.get("div[class=col-md-4] button").each(function(button,index){
+            
+            if(index%2 !== 0){
+                cy.wrap(button).click()
+                cy.get("@All_Messages").eq(index).should("include.text",messageTypes[index].closing_type).and("include.text",messageTypes[index].message_type)
+            }
+        })
+        cy.get(".close").each((closeButton)=>{
+            cy.wrap(closeButton).click()
+        })
+    }
+    static verifiyingAutocloseableMessages(messageTypes){
+        cy.get("div[class=col-md-6] div").as("All_Messages")
+        cy.get("div[class=col-md-4] button").as("All_Buttons")
+        cy.get("div[class=col-md-4] button").each(function(button,index){
+            
+            if(index%2 === 0){
+                cy.wrap(button).click()
+                cy.get("@All_Messages").eq(index).should("include.text",messageTypes[index].closing_type).and("include.text",messageTypes[index].message_type)
+            }
+        })
+        cy.wait(5000)
+        cy.get("@All_Messages").each((message)=>{
+            cy.wrap(message).should("not.be.visible")
+        })
+    }
+}
+
+export {simpleForm, checkBox, radioButton, javaScriptAlerts, bootstrapAlert}

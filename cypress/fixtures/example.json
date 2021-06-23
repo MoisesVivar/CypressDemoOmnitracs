@@ -14,5 +14,30 @@
       "a" : "s",
       "b" : "v",
       "c" : "NaN"
+    }],
+    "BootstrapAlertMessages":[{
+      "closing_type":"autocloseable",
+      "message_type":"success"
+    },{
+      "closing_type":"normal",
+      "message_type":"success"
+    },{
+      "closing_type":"autocloseable",
+      "message_type":"warning"
+    },{
+      "closing_type":"normal",
+      "message_type":"warning"
+    },{
+      "closing_type":"autocloseable",
+      "message_type":"danger"
+    },{
+      "closing_type":"normal",
+      "message_type":"danger"
+    },{
+      "closing_type":"autocloseable",
+      "message_type":"info"
+    },{
+      "closing_type":"normal",
+      "message_type":"info"
     }]
 }

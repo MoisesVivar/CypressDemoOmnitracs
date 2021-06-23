@@ -1,16 +1,13 @@
 /// <reference types="Cypress" />
 import homePage from "./pageObjects/homePage"
-import {simpleForm, checkBox, radioButton, javaScriptAlerts} from "./pageObjects/basicPages"
+import {simpleForm, checkBox, radioButton, javaScriptAlerts, bootstrapAlert} from "./pageObjects/basicPages"
 
 describe("Basics", function(){
-    
-    before(function(){
+
+    beforeEach(function(){
         cy.fixture('example').then(function(data){
             this.data = data
         })
-    })
-
-    beforeEach(function(){
         cy.visit(Cypress.env("url"))
         cy.url().should('eq', Cypress.env("url"))
         homePage.NoThanksButton().click()
@@ -84,10 +81,11 @@ describe("Basics", function(){
         javaScriptAlerts.handlingPrompt("Moisés Vivar")
     })
 
-
-
-
-    
-
+    it ("Tests the Bootstrap Alerts", function(){
+        homePage.BootstrapAlertsButton().click()
+        bootstrapAlert.verifiyingNormalMessages(this.data.BootstrapAlertMessages)
+        bootstrapAlert.verifiyingAutocloseableMessages(this.data.BootstrapAlertMessages)
+        
+    })
 
 })
