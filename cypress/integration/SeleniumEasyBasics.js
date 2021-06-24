@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 import homePage from "./pageObjects/homePage"
-import {simpleForm, checkBox, radioButton, javaScriptAlerts, bootstrapAlert} from "./pageObjects/basicPages"
+import {simpleForm, checkBox, radioButton, javaScriptAlerts, bootstrapAlert, bootstrapModals} from "./pageObjects/basicPages"
 
 describe("Basics", function(){
 
@@ -86,6 +86,12 @@ describe("Basics", function(){
         bootstrapAlert.verifiyingNormalMessages(this.data.BootstrapAlertMessages)
         bootstrapAlert.verifiyingAutocloseableMessages(this.data.BootstrapAlertMessages)
         
+    })
+
+    it("Test Bootstrap Modals", function(){
+        homePage.BootstrapModalsButton().click()
+        bootstrapModals.verifyingSingleModalExample()
+        bootstrapModals.verifyingMultipleModal()
     })
 
 })

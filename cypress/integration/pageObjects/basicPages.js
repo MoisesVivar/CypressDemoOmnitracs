@@ -114,4 +114,35 @@ class bootstrapAlert{
     }
 }
 
-export {simpleForm, checkBox, radioButton, javaScriptAlerts, bootstrapAlert}
+class bootstrapModals{
+    static verifyingSingleModalExample(){
+        cy.get("a[href='#myModal0']").as("SingleModal")
+        cy.get("@SingleModal").click()
+        cy.get("#myModal0 > .modal-dialog > .modal-content > .modal-header > .modal-title").should("have.text", "Modal Title")
+        cy.get("#myModal0 > .modal-dialog > .modal-content > .modal-footer > [data-dismiss='modal']").click()
+        cy.url().should("include",Cypress.env("url")+"bootstrap-modal-demo.html")
+        cy.get("@SingleModal").click()
+        cy.get("#myModal0 > .modal-dialog > .modal-content > .modal-footer > .btn-primary").click()
+        cy.url().should("include",Cypress.env("url")+"bootstrap-modal-demo.html")
+    }
+    static verifyingMultipleModal(){
+        cy.get("[href='#myModal']").as("MultipleModal_1")
+        cy.get("@MultipleModal_1").click()
+        cy.get("#myModal > .modal-dialog > .modal-content > .modal-header > .modal-title").should("have.text","First Modal")
+        cy.get(".modal-body > .btn").as("MultipleModal_2")
+        cy.get("@MultipleModal_2").click()
+        cy.get("#myModal2 > .modal-dialog > .modal-content > .modal-header > .modal-title").should("have.text", "Modal 2")
+        cy.get("#myModal2 > .modal-dialog > .modal-content > .modal-footer > [data-dismiss='modal']").click()//Second Close
+        cy.get("#myModal > .modal-dialog > .modal-content > .modal-footer > [data-dismiss='modal']").click()//First Close
+        cy.url().should("include",Cypress.env("url")+"bootstrap-modal-demo.html")
+        cy.get("@MultipleModal_1").click()
+        cy.get("@MultipleModal_2").click()
+        cy.get("#myModal2 > .modal-dialog > .modal-content > .modal-footer > .btn-primary").click()
+        cy.url().should("include",Cypress.env("url")+"bootstrap-modal-demo.html")
+        cy.get("@MultipleModal_1").click()
+        cy.get("#myModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary").click()
+        cy.url().should("include",Cypress.env("url")+"bootstrap-modal-demo.html")
+    }
+}
+
+export {simpleForm, checkBox, radioButton, javaScriptAlerts, bootstrapAlert, bootstrapModals}
