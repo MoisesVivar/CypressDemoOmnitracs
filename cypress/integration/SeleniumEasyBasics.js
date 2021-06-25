@@ -5,18 +5,20 @@ import {simpleForm, checkBox, radioButton, javaScriptAlerts, bootstrapAlert, boo
 describe("Basics", function(){
 
     beforeEach(function(){
+
         cy.fixture('example').then(function(data){
             this.data = data
         })
         cy.visit(Cypress.env("url"))
         cy.url().should('eq', Cypress.env("url"))
-        homePage.NoThanksButton().click()
-        homePage.BasicsButton().click()
+        homePage.OmitSeleniumAnnouncement()
+        homePage.SelectComplexity("basic")
         cy.clearCookies({ log: true})
+        
     })
     
     it("Tests simple form demo ", function(){
-        homePage.SimpleFormButton().click()
+        homePage.SelectBasicOption("Simple Form Demo")
         //Verifiying the message with 3 different sets
         this.data.SimpleFormDemo.forEach(function(set){
             simpleForm.enterMessage().type(set.message)
@@ -36,7 +38,7 @@ describe("Basics", function(){
     })
     
     it("Tests Check Box Demo",function(){
-        homePage.CheckBoxButton().click()
+        homePage.SelectBasicOption("Check Box Demo")
         //Testing single checkBox
         checkBox.singleCheckBox().should("not.be.checked")
         checkBox.singleCheckBox().check().should("be.checked")
@@ -54,7 +56,7 @@ describe("Basics", function(){
     })
 
     it("Tests Radio buttons demo", function(){
-        homePage.RadioButtonsButton().click()
+        homePage.SelectBasicOption("Radio Buttons Demo")
         radioButton.firstTwoRadioButtons().each((radio) => {
             const gender = radio.prop("value")
             cy.wrap(radio).check()
@@ -75,21 +77,21 @@ describe("Basics", function(){
     })
 
     it("Tests the Javascript alerts",function(){
-        homePage.JavascriptAlertsButton().click()
+        homePage.SelectBasicOption("Javascript Alerts")
         javaScriptAlerts.handlingAlert("I am an alert box!")
         javaScriptAlerts.handlingConfirm("Press a button!")
         javaScriptAlerts.handlingPrompt("Moisés Vivar")
     })
 
     it ("Tests the Bootstrap Alerts", function(){
-        homePage.BootstrapAlertsButton().click()
+        homePage.SelectBasicOption("Bootstrap Alerts")
         bootstrapAlert.verifiyingNormalMessages(this.data.BootstrapAlertMessages)
         bootstrapAlert.verifiyingAutocloseableMessages(this.data.BootstrapAlertMessages)
         
     })
 
     it("Test Bootstrap Modals", function(){
-        homePage.BootstrapModalsButton().click()
+        homePage.SelectBasicOption("Bootstrap Modals")
         bootstrapModals.verifyingSingleModalExample()
         bootstrapModals.verifyingMultipleModal()
     })

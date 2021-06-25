@@ -23,3 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+Cypress.Commands.add("clicking_element_by_index", (arrayOfObjects,index) => {
+    cy.get(arrayOfObjects).eq(index).click()
+})
+
+Cypress.Commands.add("clicking_element_by_name", (arrayOfObjects, objectName) => {
+    cy.get(arrayOfObjects).each((object) => {
+        if (object.text() === objectName) {
+            return cy.wrap(object).click()            
+        }
+    })
+})
