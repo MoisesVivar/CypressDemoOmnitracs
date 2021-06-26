@@ -1,5 +1,6 @@
 {
     "env":{
         "url" : "https://www.seleniumeasy.com/test/"
-    }
+    },
+    "chromeWebSecurity": false
 }
