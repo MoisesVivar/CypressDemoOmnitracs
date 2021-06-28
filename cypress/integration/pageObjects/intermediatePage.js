@@ -1,3 +1,4 @@
+/// <reference types="Cypress" />
 class InputFormWithValidations{
     static verifyFieldIsEmpty(field){
         if (field === "project_description") {
@@ -91,4 +92,43 @@ class BootstrapListBox{
     }
 }
 
-export {InputFormWithValidations, BootstrapListBox}
+class JQueryListBox{
+    static selectingSeveralNames(names, list){
+        if (list === "first") {
+            cy.get("select[class='form-control pickListSelect pickData']").select(names.split(","))
+        } else {
+            cy.get("select[class='form-control pickListSelect pickListResult']").select(names.split(","))
+        }
+        
+    }
+    static verifyingSecondListIsEmpty(){
+        cy.get("select[class='form-control pickListSelect pickListResult']").should("be.empty")
+    }
+    static verifyingDataOnSecondList(names){
+        let namesA = names.split(",")
+        namesA.forEach(name => {
+            cy.get("select[class='form-control pickListSelect pickListResult'] option").should("include.text",name)
+        })
+    }
+    static verifiyingAddingAll(){
+        cy.get("select[class='form-control pickListSelect pickListResult'] option").should("have.length",15)
+        cy.get("select[class='form-control pickListSelect pickData']").should("be.empty")
+    }
+    static clicking(name){
+        cy.contains(name).click()
+    }
+    static removingSeveralNames(names){
+        let namesA = names.split(",")
+        cy.get("select[class='form-control pickListSelect pickData'] option").then( (list) => {
+        let begin = list.length-namesA.length
+        let final = list.length
+        let lastElements = list.slice(begin,final)
+            namesA.forEach((name) => {
+                cy.wrap(lastElements).should("include.text",name)
+            })
+        })
+        cy.get("select[class='form-control pickListSelect pickListResult']").should("be.empty")
+    }
+}
+
+export {InputFormWithValidations, BootstrapListBox,JQueryListBox}
