@@ -2,6 +2,9 @@ export default class homePage{
     static SelectComplexity(complexity){
         cy.get("a[href='#" + complexity + "']").click()
     }
+    static SelectAdvancedOption(option){
+        cy.clicking_element_by_name("#advanced div[class='list-group'] a", option)
+    }
     static SelectIntermediateOption(option){
         cy.clicking_element_by_name("#intermediate div[class='list-group'] a", option)
     }
