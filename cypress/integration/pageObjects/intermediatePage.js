@@ -56,4 +56,39 @@ class InputFormWithValidations{
     }
 }
 
-export {InputFormWithValidations}
+class BootstrapListBox{
+    static typingDataOnSide(data, side){
+        let searchLocator = "div[class='dual-list list-"+side+" col-md-5'] div div div input"
+        cy.get(searchLocator).type(data)
+    }
+    static selectingOption(data, side){
+        let itemLocator =  "div[class='dual-list list-"+side+" col-md-5'] div ul"
+        cy.get(itemLocator).contains(data).click()
+    }
+    static clickButtonToSide(side){
+        let buttonLocator = "button[class='btn btn-default btn-sm move-" + side + "']"
+        cy.get(buttonLocator).click()
+    }
+    static findingElementOnList(data, side){
+        let itemLocator =  "div[class='dual-list list-"+side+" col-md-5'] div ul li"
+        cy.get(itemLocator).then((itemsList) => {
+            cy.get(itemLocator).eq(itemsList.length-1).should("have.text", data)
+        })
+    }
+    static selectSelectingAllButton(side){
+        let buttonLocator = "div[class='dual-list list-" + side + " col-md-5'] div div div div[class='btn-group']"
+        cy.get(buttonLocator).click()
+    }
+    static verifiyingAllSelections(side){
+        let itemLocator =  "div[class='dual-list list-"+side+" col-md-5'] div ul li"
+        cy.get(itemLocator).each((item) => {
+            cy.wrap(item).should("have.attr", "class", "list-group-item active")
+        })
+    }
+    static verifyingAllData(side){
+        let itemLocator =  "div[class='dual-list list-"+side+" col-md-5'] div ul li"
+        cy.get(itemLocator).should("have.length",10)
+    }
+}
+
+export {InputFormWithValidations, BootstrapListBox}
