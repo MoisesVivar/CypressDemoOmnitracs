@@ -3,7 +3,7 @@ Feature: Input Form with Validations
     Basic input form with validations such as size of a field and email validation.
     The incorrect use of the form yields a message in each field.
 
-    @EmptyFields@focus
+    @EmptyFields
     Scenario Outline: All fields empty
     Given I open the "Input Form with Validations" option
     When The "<field>" is empty
@@ -22,7 +22,7 @@ Feature: Input Form with Validations
         |project_description |Please supply a description of your project|
         |state               |Please select your state                   |
 
-    @GoodDataTextInputs
+    @GoodDataTextInputs 
     Scenario Outline: Good data introduced by field (text inputs)
     Given I open the "Input Form with Validations" option
     When I type "<Data>" into the "<field>" field
@@ -39,7 +39,7 @@ Feature: Input Form with Validations
         |zip                 |54055                   |
         |project_description |Datos Moises            |
 
-    @BadDataTextInputs
+    @BadDataTextInputs 
     Scenario Outline: Bad data introduced by field (text inputs)
     Given I open the "Input Form with Validations" option
     When I type "<Data>" into the "<field>" field
@@ -56,7 +56,7 @@ Feature: Input Form with Validations
         |zip                 |5   |Please supply a vaild zip code                          |
         |project_description |D   |Please enter at least 10 characters and no more than 200|
 
-    @GoodDataSelectMenu
+    @GoodDataSelectMenu @focus
     Scenario Outline: Good data introduced (select menu)
     Given I open the "Input Form with Validations" option
     When I select "<validState>" from the State field

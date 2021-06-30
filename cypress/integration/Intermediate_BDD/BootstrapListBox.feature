@@ -3,7 +3,7 @@ Feature: Bootstrap List Box
     This is a dual list example where you can pass data between list boxes. Yo can do it by
     selecting data or by searching them with the search box, and clicking the button pointing
     to an specific list box.
-
+    
     Scenario Outline: Passing data from left to right 
     Given I open the "Bootstrap List Box" option
     When I select the "<data>" option from the "left" list
@@ -41,7 +41,7 @@ Feature: Bootstrap List Box
         |side  |
         |left  |
         |right |
-    @focus
+    
     Scenario Outline: Verifying moving all data from side to side
     Given I open the "Bootstrap List Box" option
     When I click on the "<origin>" select all button
