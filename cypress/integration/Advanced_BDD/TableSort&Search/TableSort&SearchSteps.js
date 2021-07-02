@@ -2,14 +2,24 @@ import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps"
 import homePage from "../../pageObjects/homePage"
 import {tableSortAndSearch} from "../../pageObjects/advancedPage"
 
-beforeEach(function () {
+
+Given("Data is imported", function(){
     cy.fixture("example").then((data)=> {
         this.data = data
     })
+})
+
+And("I visit the main page", function(){
     cy.visit(Cypress.env("url"))
     cy.url().should('eq', Cypress.env("url"))
     homePage.OmitSeleniumAnnouncement()
+})
+
+And("I select the advanced option", function(){
     homePage.SelectComplexity("advanced")
+})
+
+And("I clear the cookies", function(){
     cy.clearCookies({ log: true})
 })
 

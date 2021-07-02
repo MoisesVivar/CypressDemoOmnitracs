@@ -3,6 +3,12 @@ Feature: Table Sort & Search
     This is a complex table about the data of the employees from a particular company. 
     You can decide how many entries you want to visualize per page, sort the data by a field at a time, 
     and search data from the table.
+
+    Background:
+    Given Data is imported
+    And I visit the main page
+    And I select the advanced option
+    And I clear the cookies
     
     Scenario Outline: Showing N entries per page
     Given I open the "Table Sort & Search" option
