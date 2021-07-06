@@ -42,7 +42,7 @@ class tableSortAndSearch{
         let row = 0
         let col = 0
         for (let index = 1; index <= numberOfButtons; index++) {
-            cy.get("[data-dt-idx='"+index+"']").click()
+            cy.get("[data-dt-idx='"+index+"']").click() //Clicking an specific button
             cy.get("tbody tr td").each((field,i) => {
                 row = Math.floor(i/6)
                 col = i%6
