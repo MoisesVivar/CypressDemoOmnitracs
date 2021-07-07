@@ -41,12 +41,14 @@ class tableSortAndSearch{
         const numberOfButtons = this.calculatingNumberOfButtons(parseInt(maximum_entries))
         let row = 0
         let col = 0
+        let offset = 0
         for (let index = 1; index <= numberOfButtons; index++) {
             cy.get("[data-dt-idx='"+index+"']").click() //Clicking an specific button
             cy.get("tbody tr td").each((field,i) => {
                 row = Math.floor(i/6)
                 col = i%6
-                cy.wrap(field).should("have.text", tableSorted[row+(index-1)*parseInt(maximum_entries)][col])
+                offset = (index-1)*parseInt(maximum_entries)
+                cy.wrap(field).should("have.text", tableSorted[row+offset][col])
             }) 
         } 
     }
