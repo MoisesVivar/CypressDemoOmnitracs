@@ -118,4 +118,36 @@ class tableSortAndSearch{
     }
 }
 
-export {tableSortAndSearch}
+class DynamicDataLoading{
+    static mockingAPI(){
+        cy.request("GET","https://api.randomuser.me/?nat=us").then((response) => {
+            if(response.body.results[0].gender === "female"){
+                response.body.results[0].name.first = "Brianda"
+                response.body.results[0].name.last = "Rodriguez"
+            }else{
+                response.body.results[0].name.first = "Moisés"
+                response.body.results[0].name.last = "Vivar"
+            }
+            cy.intercept({
+                 method: 'GET',
+                 url : "https://api.randomuser.me/?nat=us"
+            },response.body)
+        })
+    }
+    static gettingNewUser(){
+        cy.get("#save").click()
+    }
+    static verifyingNames(){
+        cy.get("img[src*='https://randomuser.me/api/portraits']").as("ProfilePicture")
+        cy.get("@ProfilePicture").then((picture) => {
+            let source = picture.prop("src")
+            if(source.includes("women")){
+                cy.get("#loading").should("include.text","Brianda").and("include.text","Rodriguez")   
+            }else{
+                cy.get("#loading").should("include.text","Moisés").and("include.text","Vivar")
+            }
+        })
+    }
+}
+
+export {tableSortAndSearch, DynamicDataLoading}
